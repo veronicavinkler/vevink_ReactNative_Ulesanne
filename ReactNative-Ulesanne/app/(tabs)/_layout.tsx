@@ -1,5 +1,7 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+// MUUDATUS: Lisatud useEffect siia ritta
+import React, { useEffect } from 'react'; 
+import { initDb } from '../../services/database';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -8,6 +10,15 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    try {
+      initDb();
+      console.log("Andmebaas algatatud");
+    } catch (error) {
+      console.error("Andmebaasi viga:", error);
+    }
+  }, []);
 
   return (
     <Tabs
