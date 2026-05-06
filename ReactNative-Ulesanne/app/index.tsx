@@ -62,25 +62,41 @@ export default function MenuScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: 'center', 
-    padding: 20 
-  },
-  title: { 
-    fontSize: 24, 
-    fontWeight: 'bold', 
-    marginBottom: 20, 
-    textAlign: 'center' 
-  },
-  input: { 
-    borderBottomWidth: 1, 
-    marginBottom: 20, 
-    padding: 8 
-  },
-  picker: { 
-    height: 50, 
-    width: '100%', 
-    marginBottom: 20 
-  }
+ container: {
+   flex: 1,
+   justifyContent: 'center',
+   padding: 20,
+   backgroundColor: '#f5f5f5'
+ },
+ title: {
+   fontSize: 24,
+   fontWeight: 'bold',
+   marginBottom: 20,
+   textAlign: 'center',
+   color: '#007AFF'
+ },
+ label: {
+   color: '#333',
+   marginBottom: 5,
+   fontWeight: '600'
+ },
+ input: {
+   borderBottomWidth: 1,
+   borderBottomColor: '#007AFF',
+   marginBottom: 20,
+   padding: 8,
+   color: '#000'
+ },
+ picker: {
+   height: 50,
+   width: '100%',
+   marginBottom: 20,
+   color: '#007AFF',
+   backgroundColor: '#fff'
+ },
+ link: {
+   marginTop: 15,
+   paddingVertical: 15,
+   color: '#007AFF'
+ }
 });
