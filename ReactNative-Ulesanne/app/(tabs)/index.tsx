@@ -1,98 +1,109 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { useRouter } from 'expo-router';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+export default function MenuScreen() {
+ const router = useRouter();
+ const [username, setUsername] = useState('');
+ const [category, setCategory] = useState('Science');
+ const [difficulty, setDifficulty] = useState('easy');
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+
+ const startQuiz = () => {
+   if (!username.trim()) {
+     alert("Please enter a name");
+     return;
+   }
+  
+   router.push({
+     pathname: "/quiz",
+     params: { username, category, difficulty }
+   });
+ };
+
+
+ return (
+   <View style={styles.container}>
+     <Text style={styles.title}>Quiz App</Text>
+    
+     <TextInput
+       placeholder="Enter your name"
+       value={username}
+       onChangeText={setUsername}
+       style={styles.input}
+     />
+
+
+     <Text>Select Category:</Text>
+     <Picker
+       selectedValue={category}
+       onValueChange={(itemValue) => setCategory(itemValue)}
+       style={styles.picker}
+     >
+       <Picker.Item label="Science" value="Science" />
+       <Picker.Item label="Art" value="Art" />
+       <Picker.Item label="History" value="History" />
+       <Picker.Item label="Tech" value="Tech" />
+       <Picker.Item label="Sport" value="Sport" />
+     </Picker>
+
+
+     <Text>Select Difficulty:</Text>
+     <Picker
+       selectedValue={difficulty}
+       onValueChange={(itemValue) => setDifficulty(itemValue)}
+       style={styles.picker}
+     >
+       <Picker.Item label="Easy" value="easy" />
+       <Picker.Item label="Medium" value="medium" />
+       <Picker.Item label="Hard" value="hard" />
+     </Picker>
+
+
+     <Button title="Alusta viktoriini" onPress={startQuiz} />
+   </View>
+ );
 }
 
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+ container: {
+   flex: 1,
+   justifyContent: 'center',
+   padding: 20,
+   backgroundColor: '#f5f5f5'
+ },
+ title: {
+   fontSize: 24,
+   fontWeight: 'bold',
+   marginBottom: 20,
+   textAlign: 'center',
+   color: '#007AFF'
+ },
+ label: {
+   color: '#333',
+   marginBottom: 5,
+   fontWeight: '600'
+ },
+ input: {
+   borderBottomWidth: 1,
+   borderBottomColor: '#007AFF',
+   marginBottom: 20,
+   padding: 8,
+   color: '#000'
+ },
+ picker: {
+   height: 50,
+   width: '100%',
+   marginBottom: 20,
+   color: '#007AFF',
+   backgroundColor: '#fff'
+ },
+ link: {
+   marginTop: 15,
+   paddingVertical: 15,
+   color: '#007AFF'
+ }
 });
