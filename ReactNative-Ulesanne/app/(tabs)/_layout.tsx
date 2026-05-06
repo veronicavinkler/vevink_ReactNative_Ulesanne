@@ -1,5 +1,4 @@
 import { Tabs } from 'expo-router';
-// MUUDATUS: Lisatud useEffect siia ritta
 import React, { useEffect } from 'react'; 
 import { initDb } from '../../services/database';
 
